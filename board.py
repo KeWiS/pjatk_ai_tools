@@ -26,6 +26,6 @@ class Board:
         for row in self.fields:
             row_str = ""
             for cell in row:
-                row_str += cell.get_status() + " "
+                row_str += cell.get_status() + "  "
 
             print(row_str)
