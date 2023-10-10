@@ -1,4 +1,5 @@
 from field import Field
+from field_status import FieldStatus
 
 
 class Board:
@@ -18,6 +19,13 @@ class Board:
 
     def __init__(self):
         self.fields = [[Field() for j in range(8)] for i in range(8)]
+        self._set_initial_board_state()
+
+    def _set_initial_board_state(self):
+        self.fields[3][3].set_status(FieldStatus.WHITE)
+        self.fields[4][4].set_status(FieldStatus.WHITE)
+        self.fields[3][4].set_status(FieldStatus.BLACK)
+        self.fields[4][3].set_status(FieldStatus.BLACK)
 
     def print_board(self):
         """
