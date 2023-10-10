@@ -17,7 +17,7 @@ class Board:
     """
 
     def __init__(self):
-        self.fields = [[Field()] * 8 for i in range(8)]
+        self.fields = [[Field() for j in range(8)] for i in range(8)]
 
     def print_board(self):
         """
