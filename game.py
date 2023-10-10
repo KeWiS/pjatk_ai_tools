@@ -1,25 +1,47 @@
+import numpy as np
+from easyAI import TwoPlayerGame
+
 from board import Board
+from field_status import FieldStatus
 
 
-class Game:
+class Game(TwoPlayerGame):
     """
     Main class of the game.
 
     It initializes board and manages course of the game
     """
 
-    def __init__(self):
+    POSSIBLE_MOVE_DIRECTIONS = [
+        np.array([i, j]) for i in [-1, 0, 1] for j in [-1, 0, 1] if (i != 0 or j != 0)
+    ]
+
+    def __init__(self, players):
+        self.players = players
+        self.current_player = 1
         self._board = Board()
+
+    def show(self):
         """
         Overwritten method, calls board print
         """
         self._board.print_board()
+
+    def possible_moves(self):
         """
         Calculates possible moves in brute-force way.
 
         :return: list of possible move coordinates
         :rtype: list
         """
+        return [
+            self._board.get_field_string(x, y)
+            for x in range(8)
+            for y in range(8)
+            if (self._board.get_field_status(x, y) == FieldStatus.EMPTY) and (self._flipped_pawns((x, y)) != [])
+        ]
+
+    def _flipped_pawns(self, position: tuple):
         """
         Calculates flipped pawns if move occurred on given position.
 
@@ -30,6 +52,28 @@ class Game:
         :return: list of flipped pawns after move performed on given position
         :rtype: list
         """
+        flipped_pawns = []
+
+        for possible_direction in self.POSSIBLE_MOVE_DIRECTIONS:
+            altered_position = position + possible_direction
+            struck_pawns = []
+            while (0 <= altered_position[0] <= 7) and (0 <= altered_position[1] <= 7):
+                target_field_value = self._board.get_field_status(altered_position[0], altered_position[1]).value
+                if target_field_value == 3 - self.current_player:
+                    struck_pawns.append(+altered_position)
+                elif target_field_value == self.current_player:
+                    flipped_pawns += struck_pawns
+                    break
+                else:
+                    break
+                altered_position += possible_direction
+
+        return flipped_pawns
+
+    def make_move(self, move):
+        print("a")
+
+    def is_over(self):
         """
         Determines if game is over.
 
@@ -38,9 +82,16 @@ class Game:
         :return: true - player has at least one possible move, false otherwise
         :rtype: bool
         """
+        possible_moves = self.possible_moves()
+        self._print_possible_moves_for_current_player(possible_moves)
+        return possible_moves == []
+
+    def _print_possible_moves_for_current_player(self, possible_moves):
         """
         Prints possible moves for current player
 
         :param possible_moves: list of possible moves
         :type possible_moves: list
         """
+        print("Possible moves for player " + FieldStatus.map_field_status_value_to_string(self.current_player))
+        print(possible_moves)

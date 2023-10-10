@@ -15,10 +15,11 @@ class Board:
     Latter meaning empty field
     """
 
-    LETTER_BORDER = "   " + "  ".join("abcdefgh") + "  "
+    BORDER_LETTERS = "ABCDEFGH"
+    LETTER_BORDER = "   " + "  ".join(BORDER_LETTERS) + "  "
 
     def __init__(self):
-        self.fields = [[Field() for j in range(8)] for i in range(8)]
+        self._fields = [[Field() for j in range(8)] for i in range(8)]
         self._set_initial_board_state()
 
     def _set_initial_board_state(self):
@@ -29,10 +30,10 @@ class Board:
 
         Black pawns are at coordinates D4 and E3
         """
-        self.fields[3][3].set_status(FieldStatus.WHITE)
-        self.fields[4][4].set_status(FieldStatus.WHITE)
-        self.fields[3][4].set_status(FieldStatus.BLACK)
-        self.fields[4][3].set_status(FieldStatus.BLACK)
+        self._fields[3][3].set_status(FieldStatus.WHITE)
+        self._fields[4][4].set_status(FieldStatus.WHITE)
+        self._fields[3][4].set_status(FieldStatus.BLACK)
+        self._fields[4][3].set_status(FieldStatus.BLACK)
 
     def print_board(self):
         """
@@ -41,15 +42,17 @@ class Board:
         print(self.LETTER_BORDER)
 
         i = 8
-        for row in self.fields:
+        for row in self._fields:
             row_str = str(i) + "  "
             for cell in row:
-                row_str += cell.get_status() + "  "
+                row_str += FieldStatus.map_field_status_to_string(cell.get_status()) + "  "
 
             print(row_str + str(i))
             i -= 1
 
         print(self.LETTER_BORDER)
+
+    def get_field_string(self, x_cord: int, y_cord: int):
         """
         Calculates field string based on integer coordinates
 
@@ -60,6 +63,9 @@ class Board:
         :return: String of the field coded in coord type, eg. 5B, 2C
         :rtype: str
         """
+        return self.BORDER_LETTERS[x_cord] + str(range(8, 0, -1)[y_cord])
+
+    def get_field_status(self, x_cord: int, y_cord: int):
         """
         Returns FieldStatus of field with given coordinates
 
@@ -70,3 +76,7 @@ class Board:
         :return: Field status of field with given coordinates
         :rtype: FieldStatus
         """
+        return self._fields[x_cord][y_cord].get_status()
+
+    def set_field_status(self, x_cord: int, y_cord: int, status: FieldStatus):
+        self._fields[x_cord][y_cord].set_status(status)

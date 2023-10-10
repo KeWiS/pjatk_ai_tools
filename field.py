@@ -16,7 +16,6 @@ class Field:
         self._status = FieldStatus.EMPTY
 
     def get_status(self):
-        return self._status.value
         """
         :return: Field status of the field
         :rtype: FieldStatus
