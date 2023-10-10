@@ -17,6 +17,17 @@ class Field:
 
     def get_status(self):
         return self._status.value
+        """
+        :return: Field status of the field
+        :rtype: FieldStatus
+        """
+        return self._status
 
     def set_status(self, status: FieldStatus):
+        """
+        Changes field status of the field for the one given as argument
+
+        :param status: Field status to be changed
+        :type status: FieldStatus
+        """
         self._status = status

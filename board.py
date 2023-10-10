@@ -12,9 +12,7 @@ class Board:
 
     1 -> "B", 2 -> "W", 0 -> "|"
 
-     Methods:
-        print_board():
-            Prints the board in readable format
+    Latter meaning empty field
     """
 
     LETTER_BORDER = "   " + "  ".join("abcdefgh") + "  "
@@ -25,11 +23,11 @@ class Board:
 
     def _set_initial_board_state(self):
         """
-        Method responsible for setting initial game state
+        Sets initial game state
 
-        White pawns are at coordinates 5D and 4E
+        White pawns are at coordinates D5 and E4
 
-        Black pawns are at coordinates 4D and 3E
+        Black pawns are at coordinates D4 and E3
         """
         self.fields[3][3].set_status(FieldStatus.WHITE)
         self.fields[4][4].set_status(FieldStatus.WHITE)
@@ -52,3 +50,23 @@ class Board:
             i -= 1
 
         print(self.LETTER_BORDER)
+        """
+        Calculates field string based on integer coordinates
+
+        :param x_cord: Letter coordinate, range a-h
+        :type x_cord: int
+        :param y_cord: Digit coordinate, range 8-1
+        :type y_cord: int
+        :return: String of the field coded in coord type, eg. 5B, 2C
+        :rtype: str
+        """
+        """
+        Returns FieldStatus of field with given coordinates
+
+        :param x_cord: Letter coordinate, range a-h
+        :type x_cord: int
+        :param y_cord: Digit coordinate, range 8-1
+        :type y_cord: int
+        :return: Field status of field with given coordinates
+        :rtype: FieldStatus
+        """
