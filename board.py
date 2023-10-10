@@ -10,7 +10,7 @@ class Board:
 
     Each field can be on of three states
 
-    "B", "W", "E"
+    1 -> "B", 2 -> "W", 0 -> "|"
 
      Methods:
         print_board():

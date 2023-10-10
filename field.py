@@ -7,7 +7,9 @@ class Field:
 
     Can be on of three states
     
-    FieldStatus: "B", "W", "E"
+    FieldStatus: 1 -> "B", 2 -> "W", 0 -> "|"
+
+    Latter meaning empty field
     """
 
     def __init__(self):
