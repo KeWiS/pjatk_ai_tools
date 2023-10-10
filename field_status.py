@@ -11,6 +11,6 @@ class FieldStatus(Enum):
 
      BLACK: "B" - Field occupied by black pawn
     """
-    EMPTY = "E"
+    EMPTY = "|"
     WHITE = "W"
     BLACK = "B"
