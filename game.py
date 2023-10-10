@@ -12,6 +12,7 @@ class Game(TwoPlayerGame):
     It initializes board and manages course of the game
     """
 
+    # TODO: Change i and j to x and y to keep consistency
     POSSIBLE_MOVE_DIRECTIONS = [
         np.array([i, j]) for i in [-1, 0, 1] for j in [-1, 0, 1] if (i != 0 or j != 0)
     ]
