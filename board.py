@@ -1,5 +1,6 @@
 from field import Field
 from field_status import FieldStatus
+import numpy as np
 
 
 class Board:
@@ -80,3 +81,15 @@ class Board:
 
     def set_field_status(self, x_cord: int, y_cord: int, status: FieldStatus):
         self._fields[x_cord][y_cord].set_status(status)
+
+
+    def get_field_coordinates(self, coordinates_str: str):
+        """
+        
+
+        :param coordinates_str: 
+        :type coordinates_str: str
+        :return: numpy nd array with two coordinates
+        :rtype: numpy nd array
+        """
+        return np.array([self.BORDER_LETTERS.index(coordinates_str[0]), range(8, 0, -1)[int(coordinates_str[1])]])
