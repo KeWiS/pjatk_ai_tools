@@ -83,13 +83,40 @@ class Game(TwoPlayerGame):
 
         return flipped_pawns
 
-    def make_move(self, move):
+    def make_move(self, move: str):
+        """
+        Places pawn in given coordinates and flips pawns in between
+
+        :param move: position for which the current player places the pawn
+        :type move: str
+        """
         flipped = self._flipped_pawns(self._board.get_field_coordinates(move))
         move_x = self._board.get_field_coordinates(move)[0]
         move_y = self._board.get_field_coordinates(move)[1]
         self._board.set_field_status(move_x, move_y, FieldStatus(self.current_player))
         for x, y in flipped:
             self._board.set_field_status(x, y, FieldStatus(self.current_player))
+
+    def scoring(self):
+        """
+        Counts score for current player and his opponent. 
+
+        When less than half of a board is filled with pawns, the importance
+        is given to placing pawns on the borders.
+        After more than half of a board is filled with pawns, the number
+        of players pieces matter.
+
+        :return: sum of pieces on the board
+        :rtype: int
+        """
+        if np.sum(self._board == 0) > 32:
+            player = (self._board == self.current_player).astype(int)
+            opponent = (self._board == 2).astype(int)
+            return ((player - opponent) * self.BOARD_SCORING).sum()
+        else:
+            no_pieces_player = np.sum(self._board == self.current_player)
+            no_pieces_opponent = np.sum(self._board == 2)
+            return no_pieces_player - no_pieces_opponent
 
     def is_over(self):
         """
@@ -103,16 +130,6 @@ class Game(TwoPlayerGame):
         possible_moves = self.possible_moves()
         self._print_possible_moves_for_current_player(possible_moves)
         return possible_moves == []
-
-    def scoring(self):
-        if np.sum(self._board == 0) > 32:
-            player = (self._board == self.current_player).astype(int)
-            opponent = (self._board == 2).astype(int)
-            return ((player - opponent) * self.BOARD_SCORING).sum()
-        else:
-            no_pieces_player = np.sum(self._board == self.current_player)
-            no_pieces_opponent = np.sum(self._board == 2)
-            return no_pieces_player - no_pieces_opponent
 
     def _print_possible_moves_for_current_player(self, possible_moves):
         """

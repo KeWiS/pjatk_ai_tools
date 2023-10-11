@@ -80,11 +80,21 @@ class Board:
         return self._fields[y_cord][x_cord].get_status()
 
     def set_field_status(self, x_cord: int, y_cord: int, status: FieldStatus):
+        """
+        Sets given FieldStatus of field with given coordinates
+
+        :param x_cord: Letter coordinate, range a-h
+        :type x_cord: int
+        :param y_cord: Digit coordinate, range 8-1
+        :type y_cord: int
+        :param status: Field status of field with given coordinates
+        :type status: FieldStatus
+        """
         self._fields[y_cord][x_cord].set_status(status)
 
     def get_field_coordinates(self, coordinates_str: str):
         """
-        
+        Returns tuple of coordinates based on position string
 
         :param coordinates_str: 
         :type coordinates_str: str
