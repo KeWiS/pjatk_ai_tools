@@ -27,4 +27,9 @@ Player 1 what do you play ? -> HERE GOES YOUR INPUT eg. C5
 [Rules wikipedia page](https://pl.wikipedia.org/wiki/Reversi)
 
 <h1>Gameplay example</h1>
-In reversi*.png
+
+![Beginning of the game](reversi1.png)
+
+![Mid game](reversi2.png)
+
+![End game](reversi3.png)
