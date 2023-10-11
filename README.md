@@ -1,4 +1,5 @@
 # Reversi game
+Authors: Michał Siwek, Zuzanna Bernacka
 
 Reversi game project for college Artificial Intelligence Tools subject.<br>
 Implementation for Reversi game with easyAI computer opponent.<br>
@@ -13,6 +14,14 @@ Game board has borders:
 
 * vertical - descending in digit values (8-1)
 * horizontal - ascending in letter values (A-H)
+
+<h1>Installation and running instructions (for Ubuntu)</h1>
+
+```
+apt-get update && apt-get install -y python3 python3-pip
+python3 -m pip install numpy easyai
+python main.py
+```
 
 <h1>Gameplay instruction:</h1>
 Player starts as Black pawn - "B" letter on displayed game board, possible moves are presented to you as described below.<br>
