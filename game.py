@@ -14,7 +14,7 @@ class Game(TwoPlayerGame):
 
     # TODO: Change i and j to x and y to keep consistency
     POSSIBLE_MOVE_DIRECTIONS = [
-        np.array([i, j]) for i in [-1, 0, 1] for j in [-1, 0, 1] if (i != 0 or j != 0)
+        np.array([x, y]) for x in [-1, 0, 1] for y in [-1, 0, 1] if (x != 0 or y != 0)
     ]
 
     def __init__(self, players):
@@ -71,8 +71,13 @@ class Game(TwoPlayerGame):
 
         return flipped_pawns
 
+
     def make_move(self, move):
-        print("a")
+        flipped = self._flipped_pawns(self._board.get_field_coordinates(move))
+        self._board.set_field_status(flipped[0][0], flipped[0][1], FieldStatus(self.current_player))
+        for x, y in flipped:
+            self._board.set_field_status(x, y, FieldStatus(self.current_player))
+
 
     def is_over(self):
         """
