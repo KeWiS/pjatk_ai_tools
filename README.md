@@ -25,3 +25,12 @@ Possible moves for player B<br>
 Player 1 what do you play ? -> HERE GOES YOUR INPUT eg. C5
 
 [Rules wikipedia page](https://pl.wikipedia.org/wiki/Reversi)
+
+<h1>Gameplay example</h1>
+![Beginning of game](https://github.com/KeWiS/pj_reversi/blob/2c1cc21f108f936749197d4e78bc584c248229c0/reversi1.png)
+<br>
+![Middle game](https://github.com/KeWiS/pj_reversi/blob/2c1cc21f108f936749197d4e78bc584c248229c0/reversi2.png)
+<br>
+![End game](https://github.com/KeWiS/pj_reversi/blob/2c1cc21f108f936749197d4e78bc584c248229c0/reversi3.png)
+<br>
+<br>
