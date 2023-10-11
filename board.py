@@ -1,6 +1,5 @@
 from field import Field
 from field_status import FieldStatus
-import numpy as np
 
 
 class Board:
