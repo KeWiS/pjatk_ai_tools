@@ -74,7 +74,9 @@ class Game(TwoPlayerGame):
 
     def make_move(self, move):
         flipped = self._flipped_pawns(self._board.get_field_coordinates(move))
-        self._board.set_field_status(flipped[0][0], flipped[0][1], FieldStatus(self.current_player))
+        move_x = self._board.get_field_coordinates(move)[0]
+        move_y = self._board.get_field_coordinates(move)[1]
+        self._board.set_field_status(move_x, move_y, FieldStatus(self.current_player))
         for x, y in flipped:
             self._board.set_field_status(x, y, FieldStatus(self.current_player))
 
