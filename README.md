@@ -27,10 +27,8 @@ Player 1 what do you play ? -> HERE GOES YOUR INPUT eg. C5
 [Rules wikipedia page](https://pl.wikipedia.org/wiki/Reversi)
 
 <h1>Gameplay example</h1>
-![Beginning of game](https://github.com/KeWiS/pj_reversi/blob/2c1cc21f108f936749197d4e78bc584c248229c0/reversi1.png)
-<br>
-![Middle game](https://github.com/KeWiS/pj_reversi/blob/2c1cc21f108f936749197d4e78bc584c248229c0/reversi2.png)
-<br>
-![End game](https://github.com/KeWiS/pj_reversi/blob/2c1cc21f108f936749197d4e78bc584c248229c0/reversi3.png)
+![Beginning of game](https://github.com/KeWiS/pj_reversi/assets/73021236/291cb730-ab52-41e0-9de8-5d3a9a2e8514)
+![Middle game](https://github.com/KeWiS/pj_reversi/assets/73021236/48964690-e50f-4653-b178-9fc27406524d)
+![End game](https://github.com/KeWiS/pj_reversi/assets/73021236/18ad1c1d-2504-40e5-bcdf-15b42c6ea590)
 <br>
 <br>
