@@ -18,6 +18,7 @@ class Board:
 
     BORDER_LETTERS = "ABCDEFGH"
     LETTER_BORDER = "   " + "  ".join(BORDER_LETTERS) + "  "
+    BORDER_NUMBERS = "87654321"
 
     def __init__(self):
         self._fields = [[Field() for j in range(8)] for i in range(8)]
@@ -64,7 +65,7 @@ class Board:
         :return: String of the field coded in coord type, eg. 5B, 2C
         :rtype: str
         """
-        return self.BORDER_LETTERS[x_cord] + str(range(8, 0, -1)[y_cord])
+        return self.BORDER_LETTERS[y_cord] + self.BORDER_NUMBERS[x_cord]
 
     def get_field_status(self, x_cord: int, y_cord: int):
         """
@@ -80,8 +81,7 @@ class Board:
         return self._fields[x_cord][y_cord].get_status()
 
     def set_field_status(self, x_cord: int, y_cord: int, status: FieldStatus):
-        self._fields[x_cord][y_cord].set_status(status)
-
+        self._fields[y_cord][x_cord].set_status(status)
 
     def get_field_coordinates(self, coordinates_str: str):
         """
@@ -92,4 +92,4 @@ class Board:
         :return: numpy nd array with two coordinates
         :rtype: numpy nd array
         """
-        return np.array([self.BORDER_LETTERS.index(coordinates_str[0]), range(8, 0, -1)[int(coordinates_str[1])]])
+        return (self.BORDER_LETTERS.index(coordinates_str[0]), self.BORDER_NUMBERS.index(coordinates_str[1]))
