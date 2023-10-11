@@ -12,10 +12,22 @@ class Game(TwoPlayerGame):
     It initializes board and manages course of the game
     """
 
-    # TODO: Change i and j to x and y to keep consistency
     POSSIBLE_MOVE_DIRECTIONS = [
         np.array([x, y]) for x in [-1, 0, 1] for y in [-1, 0, 1] if (x != 0 or y != 0)
     ]
+
+    BOARD_SCORING = np.array(
+        [
+            [9, 3, 3, 3, 3, 3, 3, 9],
+            [3, 1, 1, 1, 1, 1, 1, 3],
+            [3, 1, 1, 1, 1, 1, 1, 3],
+            [3, 1, 1, 1, 1, 1, 1, 3],
+            [3, 1, 1, 1, 1, 1, 1, 3],
+            [3, 1, 1, 1, 1, 1, 1, 3],
+            [3, 1, 1, 1, 1, 1, 1, 3],
+            [9, 3, 3, 3, 3, 3, 3, 9],
+        ]
+    )
 
     def __init__(self, players):
         self.players = players
@@ -71,7 +83,6 @@ class Game(TwoPlayerGame):
 
         return flipped_pawns
 
-
     def make_move(self, move):
         flipped = self._flipped_pawns(self._board.get_field_coordinates(move))
         move_x = self._board.get_field_coordinates(move)[0]
@@ -79,7 +90,6 @@ class Game(TwoPlayerGame):
         self._board.set_field_status(move_x, move_y, FieldStatus(self.current_player))
         for x, y in flipped:
             self._board.set_field_status(x, y, FieldStatus(self.current_player))
-
 
     def is_over(self):
         """
@@ -93,6 +103,16 @@ class Game(TwoPlayerGame):
         possible_moves = self.possible_moves()
         self._print_possible_moves_for_current_player(possible_moves)
         return possible_moves == []
+
+    def scoring(self):
+        if np.sum(self._board == 0) > 32:
+            player = (self._board == self.current_player).astype(int)
+            opponent = (self._board == 2).astype(int)
+            return ((player - opponent) * self.BOARD_SCORING).sum()
+        else:
+            no_pieces_player = np.sum(self._board == self.current_player)
+            no_pieces_opponent = np.sum(self._board == 2)
+            return no_pieces_player - no_pieces_opponent
 
     def _print_possible_moves_for_current_player(self, possible_moves):
         """
