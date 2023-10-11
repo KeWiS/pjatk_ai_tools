@@ -138,5 +138,6 @@ class Game(TwoPlayerGame):
         :param possible_moves: list of possible moves
         :type possible_moves: list
         """
-        print("Possible moves for player " + FieldStatus.map_field_status_value_to_string(self.current_player))
-        print(possible_moves)
+        if self.nmove % 2 != 0:
+            print("Possible moves for player " + FieldStatus.map_field_status_value_to_string(self.current_player))
+            print(possible_moves)
