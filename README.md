@@ -2,6 +2,9 @@
 Authors: Michał Siwek, Zuzanna Bernacka
 
 Reversi game project for college Artificial Intelligence Tools subject.<br>
+Reversi is a strategy board game for two players played on 8x8 board. Players fill the board with pawns of color assigned to them.<br>
+Each pawn have black and white colors on reverse sides. The player that fills the board with more pawns of his color wins the game.<br>
+
 Implementation for Reversi game with easyAI computer opponent.<br>
 Code has been developed in PyCharm.
 
