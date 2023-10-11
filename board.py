@@ -65,7 +65,7 @@ class Board:
         :return: String of the field coded in coord type, eg. 5B, 2C
         :rtype: str
         """
-        return self.BORDER_LETTERS[y_cord] + self.BORDER_NUMBERS[x_cord]
+        return self.BORDER_LETTERS[x_cord] + self.BORDER_NUMBERS[y_cord]
 
     def get_field_status(self, x_cord: int, y_cord: int):
         """
@@ -78,7 +78,7 @@ class Board:
         :return: Field status of field with given coordinates
         :rtype: FieldStatus
         """
-        return self._fields[x_cord][y_cord].get_status()
+        return self._fields[y_cord][x_cord].get_status()
 
     def set_field_status(self, x_cord: int, y_cord: int, status: FieldStatus):
         self._fields[y_cord][x_cord].set_status(status)
