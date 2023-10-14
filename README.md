@@ -13,6 +13,10 @@ Used external libraries:
 * numpy - [link](https://numpy.org)
 * easyAI - [link](https://github.com/Zulko/easyAI/tree/master)
 
+Sources of help/inspiration:
+
+* easyAI reversi example game (code fragments altered by us) - [link](https://github.com/Zulko/easyAI/blob/master/easyAI/games/Reversi.py)
+
 Game board has borders:
 
 * vertical - descending in digit values (8-1)
