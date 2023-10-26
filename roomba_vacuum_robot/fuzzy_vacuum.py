@@ -80,3 +80,21 @@ motor_speed.view()
 
 # time_per_tile.view()
 
+rule1 = ctrl.Rule(cleanliness['very_dirty'] & battery_level['high'], motor_speed['high'])# & time_per_tile['long'])
+rule2 = ctrl.Rule(cleanliness['dirty'], motor_speed['medium'])# & time_per_tile['average'])
+rule3 = ctrl.Rule(cleanliness['little_dirty'] | battery_level['medium'], motor_speed['low'])# & time_per_tile['average'])
+rule4 = ctrl.Rule(cleanliness['clean'] | battery_level['low'], motor_speed['low'])# & time_per_tile['short'])
+
+motor_speed_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4])
+
+motor_speed_simulation = ctrl.ControlSystemSimulation(motor_speed_ctrl)
+
+motor_speed_simulation.input['cleanliness'] = 1.5
+motor_speed_simulation.input['battery_level'] = 92
+
+motor_speed_simulation.compute()
+
+print(motor_speed_simulation.output['motor_speed'])
+motor_speed.view(sim=motor_speed_simulation)
+
+plt.show()
