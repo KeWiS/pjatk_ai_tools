@@ -62,8 +62,8 @@ from skfuzzy import control as ctrl
       * the water level equal 3, and
       * the battery level equal 75,
    - it would set:
-      * a x motor speed.
-      * a y time spend per tile
+      * a 4.53 motor speed.
+      * a 2.0 time spend per tile
 """
 
 
