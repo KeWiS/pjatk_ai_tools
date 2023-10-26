@@ -14,17 +14,14 @@ from skfuzzy import control as ctrl
       * Universe: How much battery has the robot left, on a scale of 0 to 100?
       * Fuzzy set: low, medium, high
    - `water level`
-      * Universe: What is the water level, on a scale of 0 to 5?
+      * Universe: What is the water level, on a scale of 0 to 6?
       * Fuzzy set: low, medium, high
 * Consequents (Outputs)
    - `motor speed`
       * Universe: How fast do motors rotate per minute, on a scale of 0 to 10
       * Fuzzy set: slow, average, fast
-   - `water dispense?`
-      * Universe: How much water will be disposed, on a scale of 0 to 10
-      * Fuzzy set: low, medium, high
    - `time per tile`
-      * Universe: How much time does a robot spend on one tile, on a scale of 0 to 3
+      * Universe: How much time does a robot spend on one tile, on a scale of 0 to 4
       * Fuzzy set: short, average, long
 * Rules
    - IF the *cleanliness* is very dirty *and* the *battery level* and *water level*
@@ -42,43 +39,45 @@ from skfuzzy import control as ctrl
    - it would recommend I leave:
       * a x motor speed.
 """
-
+# Antecedents
 cleanliness = ctrl.Antecedent(np.arange(0, 11, 1), 'cleanliness')
-#is_next_tile_obstacle = ctrl.Antecedent(np.arange(0, 2, 1), 'is_next_tile_obstacle')
-#water_level = ctrl.Antecedent(np.arange(0, 3, 1), 'water_level')
+water_level = ctrl.Antecedent(np.arange(0, 7, 1), 'water_level')
 battery_level = ctrl.Antecedent(np.arange(0, 100, 1), 'battery_level')
-#direction = ctrl.Consequent(np.arange(0, 5, 1), 'direction')
-#water_dispense = ctrl.Consequent(np.arange(0, 3, 1), 'water_dispense')
+# Consequents
 motor_speed = ctrl.Consequent(np.arange(0, 11, 1), 'motor_speed')
-#time_per_tile = ctrl.Consequent(np.arange(0, 4, 1), 'time_per_tile')
+time_per_tile = ctrl.Consequent(np.arange(0, 5, 1), 'time_per_tile')
 
+# Antecedents
 cleanliness['very_dirty'] = fuzz.trimf(cleanliness.universe, [0, 0, 3])
-cleanliness['dirty'] = fuzz.trimf(cleanliness.universe, [0, 3, 5])
-cleanliness['little_dirty'] = fuzz.trimf(cleanliness.universe, [5, 7, 10])
+cleanliness['dirty'] = fuzz.trimf(cleanliness.universe, [0, 3, 7])
+cleanliness['little_dirty'] = fuzz.trimf(cleanliness.universe, [3, 7, 10])
 cleanliness['clean'] = fuzz.trimf(cleanliness.universe, [7, 10, 10])
 
-battery_level['low'] = fuzz.trimf(battery_level.universe, [0, 0, 5])
-battery_level['medium'] = fuzz.trimf(battery_level.universe, [0, 5, 10])
-battery_level['high'] = fuzz.trimf(battery_level.universe, [5, 10, 10])
+water_level['low'] = fuzz.trimf(water_level.universe, [0, 0, 3])
+water_level['medium'] = fuzz.trimf(water_level.universe, [0, 3, 6])
+water_level['high'] = fuzz.trimf(water_level.universe, [3, 6, 6])
 
+battery_level['low'] = fuzz.trimf(battery_level.universe, [0, 0, 50])
+battery_level['medium'] = fuzz.trimf(battery_level.universe, [0, 50, 100])
+battery_level['high'] = fuzz.trimf(battery_level.universe, [50, 100, 100])
 
-
-# ew. 1500 obrotów/min max
+# Consequents
 motor_speed['low'] = fuzz.trimf(motor_speed.universe, [0, 0, 5])
 motor_speed['medium'] = fuzz.trimf(motor_speed.universe, [0, 5, 10])
 motor_speed['high'] = fuzz.trimf(motor_speed.universe, [5, 10, 10])
 
-# time_per_tile['short'] = fuzz.trimf(time_per_tile.universe, [0, 0, 1])
-# time_per_tile['average'] = fuzz.trimf(time_per_tile.universe, [0, 1, 2])
-# time_per_tile['long'] = fuzz.trimf(time_per_tile.universe, [1, 2, 2])
+time_per_tile['short'] = fuzz.trimf(time_per_tile.universe, [0, 0, 2])
+time_per_tile['average'] = fuzz.trimf(time_per_tile.universe, [0, 2, 4])
+time_per_tile['long'] = fuzz.trimf(time_per_tile.universe, [2, 4, 4])
 
-# cleanliness['very_dirty'].view()
 
+# Graph showing
+cleanliness.view()
+water_level.view()
 battery_level.view()
 
 motor_speed.view()
-
-# time_per_tile.view()
+time_per_tile.view()
 
 """
 Fuzzy rules
@@ -102,22 +101,51 @@ Most people would agree on these rules, but the rules are fuzzy. Mapping the
 imprecise rules into a defined, actionable tip is a challenge. This is the
 kind of task at which fuzzy logic excels.
 """
+motor_rule1 = ctrl.Rule(cleanliness['very_dirty'] & battery_level['high'], motor_speed['high'])
+motor_rule2 = ctrl.Rule(cleanliness['dirty'], motor_speed['medium'])
+motor_rule3 = ctrl.Rule(cleanliness['little_dirty'] | battery_level['medium'], motor_speed['low'])
+motor_rule4 = ctrl.Rule(cleanliness['clean'] | battery_level['low'], motor_speed['low'])
 
-rule1 = ctrl.Rule(cleanliness['very_dirty'] & battery_level['high'], motor_speed['high'])# & time_per_tile['long'])
-rule2 = ctrl.Rule(cleanliness['dirty'], motor_speed['medium'])# & time_per_tile['average'])
-rule3 = ctrl.Rule(cleanliness['little_dirty'] | battery_level['medium'], motor_speed['low'])# & time_per_tile['average'])
-rule4 = ctrl.Rule(cleanliness['clean'] | battery_level['low'], motor_speed['low'])# & time_per_tile['short'])
-
-motor_speed_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4])
+motor_speed_ctrl = ctrl.ControlSystem([motor_rule1, motor_rule2, motor_rule3, motor_rule4])
 
 motor_speed_simulation = ctrl.ControlSystemSimulation(motor_speed_ctrl)
 
-motor_speed_simulation.input['cleanliness'] = 1.5
-motor_speed_simulation.input['battery_level'] = 92
+time_per_tile_rule1 = ctrl.Rule(cleanliness['very_dirty'] & water_level['low'], time_per_tile['long'])
+time_per_tile_rule2 = ctrl.Rule(cleanliness['very_dirty'] & water_level['medium'], time_per_tile['long'])
+time_per_tile_rule3 = ctrl.Rule(cleanliness['very_dirty'] & water_level['high'], time_per_tile['average'])
+time_per_tile_rule4 = ctrl.Rule(cleanliness['dirty'] & water_level['low'], time_per_tile['long'])
+time_per_tile_rule5 = ctrl.Rule(cleanliness['dirty'] & water_level['medium'], time_per_tile['average'])
+time_per_tile_rule6 = ctrl.Rule(cleanliness['dirty'] & water_level['high'], time_per_tile['average'])
+time_per_tile_rule7 = ctrl.Rule(cleanliness['little_dirty'] & water_level['low'], time_per_tile['average'])
+time_per_tile_rule8 = ctrl.Rule(cleanliness['little_dirty'] & water_level['medium'], time_per_tile['average'])
+time_per_tile_rule9 = ctrl.Rule(cleanliness['little_dirty'] & water_level['high'], time_per_tile['short'])
+time_per_tile_rule10 = ctrl.Rule(cleanliness['clean'] & water_level['low'], time_per_tile['average'])
+time_per_tile_rule11 = ctrl.Rule(cleanliness['clean'] & water_level['medium'], time_per_tile['short'])
+time_per_tile_rule12 = ctrl.Rule(cleanliness['clean'] & water_level['high'], time_per_tile['short'])
+
+time_per_tile_ctrl = ctrl.ControlSystem([time_per_tile_rule1, time_per_tile_rule2, time_per_tile_rule3,
+                                         time_per_tile_rule4, time_per_tile_rule5, time_per_tile_rule6,
+                                         time_per_tile_rule7, time_per_tile_rule8, time_per_tile_rule9,
+                                         time_per_tile_rule10, time_per_tile_rule11, time_per_tile_rule12])
+
+time_per_tile_simulation = ctrl.ControlSystemSimulation(time_per_tile_ctrl)
+
+cleanliness_input = 3
+water_level_input = 3
+battery_level_input = 75
+
+motor_speed_simulation.input['cleanliness'] = cleanliness_input
+motor_speed_simulation.input['battery_level'] = battery_level_input
+
+time_per_tile_simulation.input['cleanliness'] = cleanliness_input
+time_per_tile_simulation.input['water_level'] = water_level_input
 
 motor_speed_simulation.compute()
+time_per_tile_simulation.compute()
 
-print(motor_speed_simulation.output['motor_speed'])
+print("Motor speed: " + str(motor_speed_simulation.output['motor_speed']))
+print("Time per tile: " + str(time_per_tile_simulation.output['time_per_tile']))
 motor_speed.view(sim=motor_speed_simulation)
+time_per_tile.view(sim=time_per_tile_simulation)
 
 plt.show()
