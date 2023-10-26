@@ -80,6 +80,29 @@ motor_speed.view()
 
 # time_per_tile.view()
 
+"""
+Fuzzy rules
+-----------
+
+Now, to make these triangles useful, we define the *fuzzy relationship*
+between input and output variables. For the purposes of our example, consider
+three simple rules:
+
+* Rules
+   - IF the *cleanliness* is very dirty *and* the *battery level* and *water level*
+     is high,
+     THEN the motor_speed will be high and time_per_tile will be long and water disposal will be high.
+   - IF the *cleanliness* is dirty and water level is high, THEN the motor speed and time per tile and water dispense will be medium will be average.
+   - IF the *cleanliness* is a little dirty *or* the *battery level* is medium
+     THEN the motor speed will be low and time per tile will be medium.
+   - IF the *cleanliness* is clean *or* the *battery level* is low
+     THEN the motor speed will be very low and time per tile will be short.
+
+Most people would agree on these rules, but the rules are fuzzy. Mapping the
+imprecise rules into a defined, actionable tip is a challenge. This is the
+kind of task at which fuzzy logic excels.
+"""
+
 rule1 = ctrl.Rule(cleanliness['very_dirty'] & battery_level['high'], motor_speed['high'])# & time_per_tile['long'])
 rule2 = ctrl.Rule(cleanliness['dirty'], motor_speed['medium'])# & time_per_tile['average'])
 rule3 = ctrl.Rule(cleanliness['little_dirty'] | battery_level['medium'], motor_speed['low'])# & time_per_tile['average'])
