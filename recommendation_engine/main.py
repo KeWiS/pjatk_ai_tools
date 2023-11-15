@@ -1,6 +1,9 @@
 import csv
-import requests
 import json
+
+import requests
+
+from recommender import Recommender
 
 movies_dict = {}
 movies_dict_en = {}
@@ -16,6 +19,8 @@ with open('movie_opinions.csv', newline = '', encoding = 'utf-8-sig') as csv_fil
         # transform to json
         movies_dict[person] = {row[i]: float(row[i + 1]) for i in range(0, len(row), 2) if row[i] != ''}
         # print(json.dumps(movies_dict, indent=2))
+
+    csv_file.close()
 
 headers = {"x-locale": "pl_PL", "content-type": "application/json"}
 # load csv
@@ -38,6 +43,22 @@ for key in movies_dict:
             movies_dict_en[key].update({resp_movie_info["title"]: score})
 
 with open('movie_opinions_unified.json', 'w', encoding = 'utf-8-sig') as json_file:
-    json_file.write(json.dumps(movies_dict_en, indent = 2))
+    json_file.write(json.dumps(movies_dict_en, indent = 2, ensure_ascii = False))
+
+    json_file.close()
 
 print(json.dumps(movies_dict_en, indent = 2))
+
+# USE THIS TO USE ALREADY EXISITNG JSON FILE
+# with open('movie_opinions_unified.json', 'r', encoding = 'utf-8-sig') as json_file:
+#     movies_dict_en = json.load(json_file)
+
+# Calculating distance scores
+recommender = Recommender(movies_dict_en)
+distance_scores = recommender.calculate_distance_score()
+
+# Writing distance scores to file
+with open('distance_scores.json', 'w', encoding = 'utf-8-sig') as distance_file:
+    distance_file.write(json.dumps(distance_scores, indent = 2, ensure_ascii = False))
+
+print(json.dumps(distance_scores, indent = 2, ensure_ascii = False))
