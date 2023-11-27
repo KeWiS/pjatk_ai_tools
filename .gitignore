@@ -1,2 +1,3 @@
 .idea/
 __pycache__/
+classification/email_spam/*.zip
