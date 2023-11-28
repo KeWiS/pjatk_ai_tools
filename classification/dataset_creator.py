@@ -25,7 +25,7 @@ class DatasetCreator:
                 data.append(row[:-1])
                 result.append(row[-1])
 
-            return train_test_split(data, result, test_size = 0.33, random_state = 1)
+            return train_test_split(data, result, test_size = 0.33, random_state = None)
 
     def standarize_data(self, train_data, test_data):
         sc = StandardScaler()
