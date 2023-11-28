@@ -2,6 +2,10 @@ from sklearn import svm
 
 
 class SupportVectorMachine:
+    """
+    SupportVectorMachine class - implementing Support Vector Machine model training and predictions with given datasets
+    """
+
     def __init__(self, train_data, test_data, train_result):
         self._classifier = svm.SVC()
         self._train_data = train_data
@@ -9,6 +13,11 @@ class SupportVectorMachine:
         self._train_result = train_result
 
     def train_model_and_predict(self):
+        """
+        Trains the model on train data and predicts classes based on test data
+
+        :return: The predicted classes
+        """
         self._classifier.fit(self._train_data, self._train_result)
 
         return self._classifier.predict(self._test_data)

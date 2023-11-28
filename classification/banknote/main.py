@@ -12,7 +12,7 @@ from svm import SupportVectorMachine
 DatasetCreator = DatasetCreator("banknote_data.csv", ";")
 
 train_data, test_data, train_result, test_result = DatasetCreator.create_datasets_from_file()
-train_data_std, test_data_std = DatasetCreator.standarize_data(train_data, test_data)
+train_data_std, test_data_std = DatasetCreator.standardize_data(train_data, test_data)
 
 # Classifier configuration
 decision_tree_classifier_name = "Decision Tree"
