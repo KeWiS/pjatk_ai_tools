@@ -1,7 +1,3 @@
-import sys
-
-sys.path.insert(0, "..")
-
 from dataset_creator import DatasetCreator
 from decision_tree import DecisionTree
 from graph_drawer import GraphDrawer
