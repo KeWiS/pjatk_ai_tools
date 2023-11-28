@@ -32,3 +32,11 @@ svm_accuracy_score = svm_metrics_factory.calculate_accuracy_score()
 # Printing confusion matrices
 dt_metrics_factory.print_confusion_matrix(dt_accuracy_score)
 svm_metrics_factory.print_confusion_matrix(svm_accuracy_score)
+
+# Graph configuration
+classifier_names = [decision_tree_classifier_name, support_vector_machine_classifier_name]
+bar_colors = ["blue", "green"]
+accuracies = [dt_accuracy_score, svm_accuracy_score]
+
+# Drawing graph
+GraphDrawer.draw_accuracy_graph(classifier_names, accuracies, bar_colors)
