@@ -27,3 +27,14 @@ python emails_spam_main.py
 ```
 
 <h1>Model training results:</h1>
+<h3>Banknote authenticity</h3>
+
+![Banknote authenticity classifiers accuracy graph](banknote_graph.png)
+
+![Banknote authenticity classifiers confusion matrices](banknote_confusion_matrix.png)
+
+<h3>Emails spam</h3>
+
+![Emails spam classifiers accuracy graph](emails_spam_graph.png)
+
+![Emails spam classifiers confusion matrices](emails_spam_confusion_matrix.png)
