@@ -1,8 +1,12 @@
-from classification.dataset_creator import DatasetCreator
-from classification.decision_tree import DecisionTree
-from classification.graph_drawer import GraphDrawer
-from classification.metrics_factory import MetricsFactory
-from classification.svm import SupportVectorMachine
+import sys
+
+sys.path.insert(0, "..")
+
+from dataset_creator import DatasetCreator
+from decision_tree import DecisionTree
+from graph_drawer import GraphDrawer
+from metrics_factory import MetricsFactory
+from svm import SupportVectorMachine
 
 # Dataset creation and standardization
 DatasetCreator = DatasetCreator("banknote_data.csv", ";")
