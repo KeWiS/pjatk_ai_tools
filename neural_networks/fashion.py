@@ -1,4 +1,3 @@
-import numpy as np
 import tensorflow as tf
 
 from model_factory import ModelFactory
@@ -22,7 +21,7 @@ input_layer = tf.keras.layers.Flatten(input_shape = (28, 28))
 
 model = model_factory.create_model(input_layer, [100, 100], 10)
 
-loss_function = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
+loss_function = tf.keras.losses.SparseCategoricalCrossentropy(from_logits = True)
 
 model_factory.train_model(model, "adam", loss_function, "fashion", train_data, train_result, 10)
 

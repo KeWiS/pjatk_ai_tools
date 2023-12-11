@@ -1,5 +1,6 @@
-import tensorflow as tf
 import datetime
+
+import tensorflow as tf
 
 
 class ModelFactory:
