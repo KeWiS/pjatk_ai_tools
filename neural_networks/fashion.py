@@ -25,4 +25,4 @@ loss_function = tf.keras.losses.SparseCategoricalCrossentropy(from_logits = True
 
 model_factory.train_model(model, "adam", loss_function, "fashion", train_data, train_result, 10, False)
 
-model_factory.evaluate_model(model, test_data, test_result)
+model_factory.evaluate_model(model, test_data, test_result, False)

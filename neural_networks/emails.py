@@ -23,4 +23,4 @@ loss_function = tf.keras.losses.BinaryCrossentropy()
 
 model_factory.train_model(model, "adam", loss_function, "emails", train_data_std, train_result, 100, False)
 
-model_factory.evaluate_model(model, test_data_std, test_result)
+model_factory.evaluate_model(model, test_data_std, test_result, False)

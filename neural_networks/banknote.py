@@ -26,7 +26,8 @@ model_factory.train_model(model, "adam", loss_function, "banknote", train_data_s
 
 accuracy, false_negatives, false_positives, true_negatives, true_positives = model_factory.evaluate_model(model,
                                                                                                           test_data_std,
-                                                                                                          test_result)
+                                                                                                          test_result,
+                                                                                                          True)
 # Metrics creation
 metrics_factory = MetricsFactory()
 

@@ -27,4 +27,4 @@ loss_function = tf.keras.losses.CategoricalCrossentropy()
 
 model_factory.train_model(model, "adam", loss_function, "cifar10", train_data, train_result, 10, False)
 
-model_factory.evaluate_model(model, test_data, test_result)
+model_factory.evaluate_model(model, test_data, test_result, False)

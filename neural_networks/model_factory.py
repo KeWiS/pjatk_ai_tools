@@ -17,10 +17,10 @@ class ModelFactory:
     def train_model(self, model, optimizer, loss_function, log_name, train_data, train_result, epochs, confusion):
         if confusion:
             metrics = ['accuracy',
-                                                                              tf.keras.metrics.FalseNegatives(),
-                                                                              tf.keras.metrics.FalsePositives(),
-                                                                              tf.keras.metrics.TrueNegatives(),
-                                                                              tf.keras.metrics.TruePositives()]
+                       tf.keras.metrics.FalseNegatives(),
+                       tf.keras.metrics.FalsePositives(),
+                       tf.keras.metrics.TrueNegatives(),
+                       tf.keras.metrics.TruePositives()]
         else:
             metrics = ['accuracy']
 
@@ -32,9 +32,15 @@ class ModelFactory:
 
         model.fit(train_data, train_result, epochs = epochs, callbacks = [tensorboard_callback])
 
-    def evaluate_model(self, model, test_data, test_result):
+    def evaluate_model(self, model, test_data, test_result, confusion):
         print("\nEvaluating model:")
-        loss, accuracy, false_negatives, false_positives, true_negatives, true_positives = model.evaluate(test_data, test_result)
+        if confusion:
+            loss, accuracy, false_negatives, false_positives, true_negatives, true_positives = model.evaluate(test_data,
+                                                                                                              test_result)
+            ret = accuracy, false_negatives, false_positives, true_negatives, true_positives
+        else:
+            loss, accuracy = model.evaluate(test_data, test_result)
+            ret = accuracy
 
         print(f"Final loss: {loss} \nFinal accuracy: {accuracy}")
-        return accuracy, false_negatives, false_positives, true_negatives, true_positives
+        return ret
