@@ -23,7 +23,7 @@ input_layer = tf.keras.layers.Flatten(input_shape = (32, 32, 3))
 
 model = model_factory.create_model(input_layer, [100, 100], 10)
 
-loss_function = tf.keras.losses.SparseCategoricalCrossentropy(from_logits = True)
+loss_function = tf.keras.losses.CategoricalCrossentropy()
 
 model_factory.train_model(model, "adam", loss_function, "cifar10", train_data, train_result, 10)
 
