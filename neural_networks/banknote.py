@@ -3,6 +3,7 @@ import tensorflow as tf
 
 from dataset_creator import DatasetCreator
 from model_factory import ModelFactory
+from metrics_factory import MetricsFactory
 
 # Dataset creation and standardization
 DatasetCreator = DatasetCreator("banknote_data.csv", ";")
@@ -23,4 +24,11 @@ loss_function = tf.keras.losses.BinaryCrossentropy()
 
 model_factory.train_model(model, "adam", loss_function, "banknote", train_data_std, train_result, 100)
 
-model_factory.evaluate_model(model, test_data_std, test_result)
+accuracy, false_negatives, false_positives, true_negatives, true_positives = model_factory.evaluate_model(model,
+                                                                                                          test_data_std,
+                                                                                                          test_result)
+# Metrics creation
+metrics_factory = MetricsFactory()
+
+# Printing confusion matrices
+metrics_factory.print_confusion_matrix(accuracy, false_negatives, false_positives, true_negatives, true_positives)

@@ -15,7 +15,11 @@ class ModelFactory:
         return tf.keras.Sequential(layers)
 
     def train_model(self, model, optimizer, loss_function, log_name, train_data, train_result, epochs):
-        model.compile(optimizer = optimizer, loss = loss_function, metrics = ['accuracy'])
+        model.compile(optimizer = optimizer, loss = loss_function, metrics = ['accuracy',
+                                                                              tf.keras.metrics.FalseNegatives(),
+                                                                              tf.keras.metrics.FalsePositives(),
+                                                                              tf.keras.metrics.TrueNegatives(),
+                                                                              tf.keras.metrics.TruePositives()])
 
         logdir = "logs/fit/" + log_name + "_" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 
@@ -25,6 +29,7 @@ class ModelFactory:
 
     def evaluate_model(self, model, test_data, test_result):
         print("\nEvaluating model:")
-        loss, accuracy = model.evaluate(test_data, test_result)
+        loss, accuracy, false_negatives, false_positives, true_negatives, true_positives = model.evaluate(test_data, test_result)
 
         print(f"Final loss: {loss} \nFinal accuracy: {accuracy}")
+        return accuracy, false_negatives, false_positives, true_negatives, true_positives
