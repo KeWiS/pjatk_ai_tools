@@ -15,4 +15,4 @@ class MetricsFactory:
         print("\nConfusion matrix:")
         print(f"TP: {true_positives}  |   FN: {false_negatives}")
         print(f"FP: {false_positives}  |   TN: {true_negatives}")
-        print(f"Accuracy: {acc_score}%\n")
+        print(f"Accuracy: {acc_score * 100}%\n")

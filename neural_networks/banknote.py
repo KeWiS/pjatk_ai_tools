@@ -22,7 +22,7 @@ model = model_factory.create_model(input_layer, [50, 50], 1)
 
 loss_function = tf.keras.losses.BinaryCrossentropy()
 
-model_factory.train_model(model, "adam", loss_function, "banknote", train_data_std, train_result, 100)
+model_factory.train_model(model, "adam", loss_function, "banknote", train_data_std, train_result, 100, True)
 
 accuracy, false_negatives, false_positives, true_negatives, true_positives = model_factory.evaluate_model(model,
                                                                                                           test_data_std,

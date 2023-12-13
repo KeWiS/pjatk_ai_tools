@@ -14,12 +14,17 @@ class ModelFactory:
 
         return tf.keras.Sequential(layers)
 
-    def train_model(self, model, optimizer, loss_function, log_name, train_data, train_result, epochs):
-        model.compile(optimizer = optimizer, loss = loss_function, metrics = ['accuracy',
+    def train_model(self, model, optimizer, loss_function, log_name, train_data, train_result, epochs, confusion):
+        if confusion:
+            metrics = ['accuracy',
                                                                               tf.keras.metrics.FalseNegatives(),
                                                                               tf.keras.metrics.FalsePositives(),
                                                                               tf.keras.metrics.TrueNegatives(),
-                                                                              tf.keras.metrics.TruePositives()])
+                                                                              tf.keras.metrics.TruePositives()]
+        else:
+            metrics = ['accuracy']
+
+        model.compile(optimizer = optimizer, loss = loss_function, metrics = metrics)
 
         logdir = "logs/fit/" + log_name + "_" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
 
