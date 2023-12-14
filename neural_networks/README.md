@@ -31,3 +31,12 @@ python fashion.py
 ```
 
 <h1>Neural networks training results:</h1>
+<h2>Banknote authenticity</h2>
+1. Banknote authenticity neural network - 2 layers with 50 neurons, 100 epochs and confusion matrix
+![Banknote authenticity neural network](banknote_neural_network.png)
+2. Banknote authenticity learning curve - accuracy
+![Banknote authenticity learning curve accuracy](banknote_epoch_accuracy.png)
+3. Banknote authenticity learning curve - loss
+![Banknote authenticity learning curve loss](banknote_epoch_loss.png)
+4. Banknote authenticity decision tree and SVM comparison
+![Banknote authenticity classifiers comparison](banknote_classifiers.png)
